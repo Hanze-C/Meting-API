@@ -35,7 +35,7 @@ app.get('/', (c) => {
                                 </a>
                             </p>
 
-                            <p>当前版本：1.1.2.1</p>
+                            <p>当前版本：1.1.2.1(<a href="https://github.com/Hanze-C/Meting-API" style="text-decoration: none;">Hanze-C/Meting-API</a>)</p>
                             <p>当前运行环境：${get_runtime()}</p>
                             <p>当前时间：${new Date()}</p>
                             <p>内部端口：${config.PORT}</p>
