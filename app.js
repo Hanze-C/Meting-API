@@ -8,9 +8,15 @@ import { get_runtime, get_url } from './src/util.js'
 
 const app = new Hono()
 
-app.use('*', cors())
+app.use('*', cors({
+    origin: '*',
+    allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
+}))
 app.use('*', logger())
+app.options('*', (c) => c.body(null, 204))
 app.get('/api', api)
+app.get('/api/', api)
 app.get('/test', handler)
 app.get('/', (c) => {
 
@@ -29,7 +35,7 @@ app.get('/', (c) => {
                                 </a>
                             </p>
 
-                            <p>当前版本：1.1.2</p>
+                            <p>当前版本：1.1.2.1</p>
                             <p>当前运行环境：${get_runtime()}</p>
                             <p>当前时间：${new Date()}</p>
                             <p>内部端口：${config.PORT}</p>

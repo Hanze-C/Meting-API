@@ -8,6 +8,7 @@ import { test, expect } from 'vitest'
 const app = new Hono()
 app.use('*', cors())
 app.get('/api', api)
+app.get('/api/', api)
 
 // test('examples match providers', () => {
 //     const p = new Providers()
@@ -23,6 +24,14 @@ test('test provider support_type', () => {
             expect(provider.support_type).toContain(type)
         })
     })
+})
+
+test('test trailing slash api alias and cors headers', async () => {
+    const res = await app.request('http://localhost/api/?server=netease&type=url&id=3378813781')
+    expect(res.status).toBeGreaterThanOrEqual(200)
+    expect(res.status).toBeLessThan(400)
+    expect(res.headers.get('Access-Control-Allow-Origin')).toBe('*')
+    expect(res.headers.get('Access-Control-Allow-Methods')).toContain('GET')
 })
 
 const YT_API = globalThis?.Deno?.env?.get("YT_API") || globalThis?.process?.env?.YT_API
